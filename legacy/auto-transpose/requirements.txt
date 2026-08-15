@@ -1,0 +1,5 @@
+# No third-party Python packages required.
+#
+# Runtime tools:
+# - MuseScore 4, discoverable on PATH or via MUSESCORE_PATH.
+# - SmartScore, discoverable on PATH or via SMARTSCORE_PATH for PDFtoMXCZ.py.

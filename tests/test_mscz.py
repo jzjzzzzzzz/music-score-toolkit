@@ -1,6 +1,6 @@
-from pathlib import Path
 import xml.etree.ElementTree as ET
 import zipfile
+from pathlib import Path
 
 import pytest
 
@@ -10,7 +10,6 @@ from music_score_toolkit.mscz import (
     transpose_mscx,
     transpose_mscz,
 )
-
 
 SCORE_XML = b"""<?xml version="1.0" encoding="UTF-8"?>
 <museScore version="4.0">

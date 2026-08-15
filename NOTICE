@@ -1,0 +1,12 @@
+Music Score Toolkit
+Copyright 2026 ZHIXUAN ZHOU
+
+This repository consolidates and supersedes two repositories by the same
+author:
+
+* auto-transpose (Apache License 2.0)
+* Auto-Music-Transpose (MIT License)
+
+The original source snapshots are retained under legacy/ for provenance and
+are governed by the license notices present in their source repositories.
+

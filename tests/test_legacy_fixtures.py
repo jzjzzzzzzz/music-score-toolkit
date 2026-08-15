@@ -1,10 +1,9 @@
-from pathlib import Path
 import zipfile
+from pathlib import Path
 
 import pytest
 
 from music_score_toolkit.mscz import transpose_mscz
-
 
 FIXTURES = Path(__file__).parent / "fixtures"
 

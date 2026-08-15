@@ -8,7 +8,6 @@ from pathlib import Path
 
 from .tools import convert_score, find_smartscore
 
-
 SCORE_SUFFIXES = (".mxl", ".musicxml", ".xml")
 
 

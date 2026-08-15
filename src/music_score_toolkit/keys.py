@@ -2,7 +2,6 @@
 
 from __future__ import annotations
 
-
 KEY_TO_SEMITONE = {
     "C": 0,
     "C#": 1,

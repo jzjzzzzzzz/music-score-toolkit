@@ -5,6 +5,7 @@ from __future__ import annotations
 import os
 import shutil
 import subprocess
+import tempfile
 from collections.abc import Iterable
 from pathlib import Path
 
@@ -93,11 +94,35 @@ def convert_score(
     if not executable.is_file():
         raise ExecutableNotFoundError(f"MuseScore executable does not exist: {executable}")
     destination.parent.mkdir(parents=True, exist_ok=True)
-    subprocess.run(
-        [str(executable), str(source), "-o", str(destination)],
-        check=True,
-    )
-    if not destination.exists():
-        raise RuntimeError(f"MuseScore exited without creating the requested output: {destination}")
-    return destination
 
+    descriptor, temporary_name = tempfile.mkstemp(
+        dir=destination.parent,
+        prefix=f".{destination.stem}.",
+        suffix=destination.suffix,
+    )
+    os.close(descriptor)
+    temporary_output = Path(temporary_name)
+    temporary_output.unlink()
+
+    try:
+        try:
+            subprocess.run(
+                [str(executable), str(source), "-o", str(temporary_output)],
+                check=True,
+            )
+        except subprocess.CalledProcessError as exc:
+            raise RuntimeError(
+                f"MuseScore failed to convert {source} to {destination} "
+                f"(exit code {exc.returncode})."
+            ) from exc
+        except OSError as exc:
+            raise RuntimeError(f"Unable to run MuseScore executable {executable}: {exc}") from exc
+
+        if not temporary_output.is_file():
+            raise RuntimeError(
+                f"MuseScore exited without creating the requested output: {destination}"
+            )
+        os.replace(temporary_output, destination)
+    finally:
+        temporary_output.unlink(missing_ok=True)
+    return destination
